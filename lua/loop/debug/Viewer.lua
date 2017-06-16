@@ -65,9 +65,11 @@ local keywords = {
 	["while"] = true,
 }
 local escapecodes = {
+	["\a"] = [[\a]],
 	["\b"] = [[\b]],
 	["\f"] = [[\f]],
 	["\n"] = [[\n]],
+	["\r"] = [[\r]],
 	["\t"] = [[\t]],
 	["\v"] = [[\v]],
 }
