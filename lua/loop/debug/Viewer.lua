@@ -25,6 +25,7 @@ local find = string.find
 local format = string.format
 local gmatch = string.gmatch
 local gsub = string.gsub
+local match = string.match
 local strrep = string.rep
 
 local table = require "table"
@@ -195,7 +196,7 @@ function Viewer:writetable(value, buffer, history, prefix, maxdepth)
 					if not self.nofields
 					and keytype == "string"
 					and not keywords[key]
-					and key:match(idpat)
+					and match(key, idpat)
 					then
 						buffer:write(key)
 					else
@@ -309,7 +310,7 @@ function Viewer:packnames(packages)
 					local kind = type(member)
 					if labels[member] == nil
 					and (kind == "function" or kind == "userdata")
-					and field:match(idpat)
+					and type(field) == "string" and match(field, idpat)
 					then
 						labels[member] = name.."."..field
 					end
