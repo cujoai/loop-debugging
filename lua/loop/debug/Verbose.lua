@@ -133,7 +133,6 @@ end
 
 local Verbose = class{
 	taglength = 9,
-	timestamp = false,
 	timeformat = false,
 	timelength = 0, -- internal: should only be accessed by this class
 	lastthread = false, -- internal: should only be accessed by this class
@@ -218,44 +217,3 @@ function Verbose:level(...)
 end
 
 return Verbose
-
---[[----------------------------------------------------------------------------
-LOG = loop.debug.Verbose{
-	groups = {
-		-- levels
-		{"main"},
-		{"counter"},
-		-- aliases
-		all = {"main", "counter"},
-	},
-}
-LOG:flag("all", true)
--------------------------------------
-local Counter = loop.base.class{
-	value = 0,
-	step = 1,
-}
-function Counter:add()                LOG:counter "Adding step to counter"
-	self.value = self.value + self.step
-end
--------------------------------------
-counter = Counter()                   LOG:main "Counter object created"
-steps = 10                            LOG:main(true, "Counting ",steps," steps")
-for i=1, steps do counter:add() end   LOG:main(false, "Done! Counter=",counter)
--------------------------------------
---> [main]    Counter object created
---> [main]    Counting 10 steps
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [counter] |  Adding step to counter
---> [main]    Done! Counter={ table: 0x9c3e390
--->           |  value = 10,
--->           }
-----------------------------------------------------------------------------]]--
