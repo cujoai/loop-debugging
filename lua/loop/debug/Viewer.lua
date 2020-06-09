@@ -265,10 +265,10 @@ function Viewer:writevalue(value, buffer, history, prefix, maxdepth)
 				     or self.labels[value] or self:label(value)
 			end
 			history[value] = label
-			local writer = self[luatype]
-			if writer then
-				return writer(self, value, buffer, history, prefix, maxdepth)
-			end
+		end
+		local writer = self[luatype]
+		if writer then
+			return writer(self, value, buffer, history, prefix, maxdepth)
 		end
 		buffer:write(label)
 	end
