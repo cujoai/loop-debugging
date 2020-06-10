@@ -167,7 +167,7 @@ end
 
 function Viewer:writetable(value, buffer, history, prefix, maxdepth)
 	buffer:write("{")
-	if not self.nolabels then 
+	if not self.nolabels then
 		buffer:write(" --[[",history[value],"]]")
 	end
 	local key, field = next(value)
@@ -223,11 +223,11 @@ Viewer["string"] = Viewer.writestring
 Viewer["table"] = Viewer.writetable
 
 function Viewer:label(value)
-	local method, table = tostringmetamethod(value)
+	local method, method_table = tostringmetamethod(value)
 	if method ~= nil then
-		rawset(table, "__tostring", nil)
+		rawset(method_table, "__tostring", nil)
 		local raw = luatostring(value)
-		rawset(table, "__tostring", method)
+		rawset(method_table, "__tostring", method)
 		if self.metalabels then
 			local custom = method(value)
 			if raw ~= custom then
@@ -265,10 +265,10 @@ function Viewer:writevalue(value, buffer, history, prefix, maxdepth)
 				     or self.labels[value] or self:label(value)
 			end
 			history[value] = label
-			local writer = self[luatype]
-			if writer then
-				return writer(self, value, buffer, history, prefix, maxdepth)
-			end
+		end
+		local writer = self[luatype]
+		if writer then
+			return writer(self, value, buffer, history, prefix, maxdepth)
 		end
 		buffer:write(label)
 	end
